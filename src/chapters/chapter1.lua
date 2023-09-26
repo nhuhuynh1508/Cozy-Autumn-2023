@@ -14,7 +14,12 @@ function Chapter1:enter(from)
 
     Clickable(500, 0, Sprites.sebastian, 0,
         {Collider(0, 0, 256, 256), Collider(0, 256, 128, 128)},
-        function() print('quick math') end
+        function()
+          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong..')
+          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong....')
+          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong......')
+          Gamestate.current():addDialogue('Sebastian', 'Ta cung choi vong tron')
+        end
     ),
 
     Inspectable(0, 300, Sprites.leah, 0,
@@ -22,7 +27,7 @@ function Chapter1:enter(from)
         {Object(200, 150, Sprites.alex, -4)},
         {Clickable(350, 150, Sprites.shane, -1,
             {Collider(0, 0, 256, 256)},
-            function() print('C2H5OH please') end
+            function() Gamestate.current():addDialogue('Shane', 'C2H5OH please') end
         )}
     )
   }

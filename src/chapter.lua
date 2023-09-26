@@ -8,13 +8,30 @@ function Chapter:enter(objects, items)
 
   self.items = Manager(items)
 
-  self.dialogue = nil
+  self.dialogues = {}
+  self.currentDialogue = nil
 
   self.suit = Suit.new()
 end
 
 function Chapter:inspect(inspectable)
   self.inspectedObject = inspectable
+end
+
+function Chapter:addDialogue(name, line)
+  table.insert(self.dialogues, {name = name, line = line})
+  if self.currentDialogue == nil then
+    self:nextDialogue()
+  end
+end
+
+function Chapter:nextDialogue()
+  if #self.dialogues > 0 then
+    self.currentDialogue = self.dialogues[1]
+    table.remove(self.dialogues, 1)
+  else
+    self.currentDialogue = nil
+  end
 end
 
 function Chapter:update(dt)
@@ -30,6 +47,7 @@ function Chapter:update(dt)
 end
 
 function Chapter:draw()
+
   self.objects:draw()
 
   love.graphics.setColor(1, 1, 1)
@@ -43,19 +61,33 @@ function Chapter:draw()
     self.inspectedObject:inspectDraw()
   end
 
+  if self.currentDialogue then
+    love.graphics.setColor(0.4, 0.4, 0.4, 0.8)
+    love.graphics.rectangle('fill', 40, 400, love.graphics.getWidth() - 80, 160)
+
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(self.currentDialogue.name, 60, 420)
+    love.graphics.print(self.currentDialogue.line, 60, 440)
+  end
+
   self.suit:draw()
 end
 
 function Chapter:mousepressed(mx, my, button)
-  local event = {
-    mx = mx, my = my,
-    button = button, resolved = false
-  }
+  if self.currentDialogue ~= nil then
+    self:nextDialogue()
 
-  if self.inspectedObject then
-    self.inspectedObject:inspectMousepressed(event)
   else
-    self.objects:mousepressed(event)
+    local event = {
+      mx = mx, my = my,
+      button = button, resolved = false
+    }
+  
+    if self.inspectedObject then
+      self.inspectedObject:inspectMousepressed(event)
+    else
+      self.objects:mousepressed(event)
+    end  
   end
 end
 
