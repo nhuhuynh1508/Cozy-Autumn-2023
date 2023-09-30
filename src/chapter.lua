@@ -2,6 +2,8 @@ local Manager = require 'src.manager'
 
 local Chapter = Class('Chapter')
 
+local WIDTH, HEIGHT = love.graphics.getDimensions()
+
 function Chapter:enter(objects, items)
   self.objects = Manager(objects)
   self.inspectedObject = nil
@@ -10,6 +12,9 @@ function Chapter:enter(objects, items)
 
   self.dialogues = {}
   self.currentDialogue = nil
+
+  self._currentScene = 1
+  self.camera = Camera.new()
 
   self.suit = Suit.new()
 end
@@ -34,6 +39,23 @@ function Chapter:nextDialogue()
   end
 end
 
+function Chapter:getCurrentScene()
+  return self._currentScene
+end
+
+function Chapter:getSceneX(scene)
+  local sign = 0
+  if scene > 0 then sign = 1
+  elseif scene < 0 then sign = -1
+  end
+  return scene * (WIDTH + 200) + (WIDTH/2 * sign)
+end
+
+function Chapter:switchScene(scene)
+  self._currentScene = scene
+  self.camera:lookAt(self:getSceneX(self._currentScene) + WIDTH/2, HEIGHT / 2)
+end
+
 function Chapter:update(dt)
   self.objects:update(dt)
 
@@ -47,6 +69,7 @@ function Chapter:update(dt)
 end
 
 function Chapter:draw()
+  self.camera:attach()
 
   self.objects:draw()
 
@@ -70,6 +93,8 @@ function Chapter:draw()
     love.graphics.print(self.currentDialogue.line, 60, 440)
   end
 
+  self.camera:detach()
+
   self.suit:draw()
 end
 
@@ -78,8 +103,10 @@ function Chapter:mousepressed(mx, my, button)
     self:nextDialogue()
 
   else
+    local mcx, mcy = self.camera:mousePosition()
+
     local event = {
-      mx = mx, my = my,
+      mx = mcx, my = mcy,
       button = button, resolved = false
     }
   

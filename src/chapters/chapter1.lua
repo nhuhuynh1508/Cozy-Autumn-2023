@@ -29,7 +29,22 @@ function Chapter1:enter(from)
             {Collider(0, 0, 256, 256)},
             function() Gamestate.current():addDialogue('Shane', 'C2H5OH please') end
         )}
-    )
+    ),
+
+    Clickable(500, 300, Sprites.abigail, 0,
+        {Collider(0, 0, 256, 256)},
+        function()
+          Gamestate.current():switchScene(1)
+        end
+    ),
+
+    Clickable(self:getSceneX(1) + 350, 200, Sprites.maru, 0,
+        {Collider(0, 0, 256, 256)},
+        function()
+          print('hello baby girl')
+          Gamestate.current():switchScene(0)
+        end
+    ),
   }
 
   local items = {}
