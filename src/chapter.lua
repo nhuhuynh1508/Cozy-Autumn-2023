@@ -3,12 +3,15 @@ local Manager = require 'src.manager'
 local Chapter = Class('Chapter')
 
 local WIDTH, HEIGHT = love.graphics.getDimensions()
+local itemSize = 64
+local spacing = 16
 
 function Chapter:enter(objects, items)
   self.objects = Manager(objects)
   self.inspectedObject = nil
 
-  self.items = Manager(items)
+  self.items = items or {}
+  self.selectedItemIndex = nil
 
   self.dialogues = {}
   self.currentDialogue = nil
@@ -56,6 +59,19 @@ function Chapter:switchScene(scene)
   self.camera:lookAt(self:getSceneX(self._currentScene) + WIDTH/2, HEIGHT / 2)
 end
 
+function Chapter:addItem(item)
+  table.insert(self.items, item)
+end
+
+function Chapter:removeItem(name)
+  for i, item in ipairs(self.items) do
+    if name == item.name then
+      table.remove(self.items, i)
+      break
+    end
+  end
+end
+
 function Chapter:update(dt)
   self.objects:update(dt)
 
@@ -96,25 +112,55 @@ function Chapter:draw()
   self.camera:detach()
 
   self.suit:draw()
+
+  -- Drawing items
+  love.graphics.setColor(0, 0, 0, 0.7)
+  love.graphics.rectangle('fill', 0, HEIGHT - 96, WIDTH, HEIGHT)
+  for i = 1, #self.items do
+    local x = WIDTH/2 - itemSize/2 - (#self.items-1) * (itemSize + spacing) / 2 + (i-1) * (itemSize + spacing)
+
+    if self.selectedItemIndex == i then love.graphics.setColor(0.7, 0.7, 0.7)
+    else love.graphics.setColor(1, 1, 1)
+    end
+    love.graphics.draw(self.items[i].sprite, x, 460, 0, 2, 2)
+    -- love.graphics.rectangle('fill', x, 460, itemSize, itemSize)
+  end
 end
 
 function Chapter:mousepressed(mx, my, button)
-  if self.currentDialogue ~= nil then
-    self:nextDialogue()
+  if my > HEIGHT - 96 then
+    for i = 1, #self.items do
+      local x = WIDTH/2 - itemSize/2 - (#self.items-1) * (itemSize + spacing) / 2 + (i-1) * (itemSize + spacing)
+      local y = 460
 
-  else
-    local mcx, mcy = self.camera:mousePosition()
+      if x < mx and mx < x + itemSize and
+          y < my and my < y + itemSize then
+        if self.selectedItemIndex == i then
+          self.selectedItemIndex = nil
+        else
+          self.selectedItemIndex = i
+        end
+      end
+    end
 
-    local event = {
-      mx = mcx, my = mcy,
-      button = button, resolved = false
-    }
-  
-    if self.inspectedObject then
-      self.inspectedObject:inspectMousepressed(event)
+  else  
+    if self.currentDialogue ~= nil then
+      self:nextDialogue()
+
     else
-      self.objects:mousepressed(event)
-    end  
+      local mcx, mcy = self.camera:mousePosition()
+
+      local event = {
+        mx = mcx, my = mcy,
+        button = button, resolved = false
+      }
+    
+      if self.inspectedObject then
+        self.inspectedObject:inspectMousepressed(event)
+      else
+        self.objects:mousepressed(event)
+      end  
+    end
   end
 end
 

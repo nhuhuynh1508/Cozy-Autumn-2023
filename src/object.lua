@@ -32,4 +32,12 @@ function Object:mousepressed(mx, my, button)
 
 end
 
+function Object:mousemoved(mx, my)
+
+end
+
+function Object:mousereleased(mx, my, button)
+
+end
+
 return Object

@@ -76,7 +76,6 @@ function Manager:mousepressed(event)
   end
 end
 
---[[
 function Manager:mousemoved(x, y)
   for _, object in ipairs(self.objects) do
     object:mousemoved(x, y)
@@ -89,6 +88,7 @@ function Manager:mousereleased(x, y, button)
   end
 end
 
+--[[
 function Manager:keypressed(key, scancode, isRepeat)
   for _, object in ipairs(self.objects) do
     object:keypressed(key, scancode, isRepeat)

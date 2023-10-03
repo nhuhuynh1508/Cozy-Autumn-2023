@@ -3,6 +3,7 @@ local Object = require 'src.object'
 local Collider = require 'src.collider'
 local Clickable = require 'src.clickable'
 local Inspectable = require 'src.inspectable'
+local Item = require 'src.item'
 
 local Chapter1 = Class('Chapter1', Chapter)
 
@@ -27,7 +28,7 @@ function Chapter1:enter(from)
         {Object(200, 150, Sprites.alex, -4)},
         {Clickable(350, 150, Sprites.shane, -1,
             {Collider(0, 0, 256, 256)},
-            function() Gamestate.current():addDialogue('Shane', 'C2H5OH please') end
+            function() Gamestate.current():addItem(Item('C2H5OH', Sprites.harvey)) end
         )}
     ),
 
