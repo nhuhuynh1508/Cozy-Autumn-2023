@@ -1,3 +1,5 @@
+love.graphics.setDefaultFilter('nearest', 'nearest')
+
 Sprites = {
   abigail = love.graphics.newImage('assets/Abigail.png'),
   alex = love.graphics.newImage('assets/Alex.png'),
@@ -11,4 +13,11 @@ Sprites = {
   sam = love.graphics.newImage('assets/Sam.png'),
   sebastian = love.graphics.newImage('assets/Sebastian.png'),
   shane = love.graphics.newImage('assets/Shane.png'),
+
+  chapter1 = {
+    backgrounds = {
+      A = love.graphics.newImage('assets/Chapter 1/A.png'),
+      B = love.graphics.newImage('assets/Chapter 1/B.png'),
+    }
+  }
 }

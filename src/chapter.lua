@@ -6,7 +6,11 @@ local WIDTH, HEIGHT = love.graphics.getDimensions()
 local itemSize = 64
 local spacing = 16
 
-function Chapter:enter(objects, items)
+function Chapter:enter(backgrounds, objects, items)
+  self.backgrounds = backgrounds or {}
+  self._currentScene = 1
+  self.camera = Camera.new()
+
   self.objects = Manager(objects)
   self.inspectedObject = nil
 
@@ -15,9 +19,6 @@ function Chapter:enter(objects, items)
 
   self.dialogues = {}
   self.currentDialogue = nil
-
-  self._currentScene = 1
-  self.camera = Camera.new()
 
   self.suit = Suit.new()
 end
@@ -85,6 +86,11 @@ function Chapter:update(dt)
 end
 
 function Chapter:draw()
+  if self.backgrounds[self._currentScene] then
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(self.backgrounds[self._currentScene], 0, 0, 0, 4, 4)
+  end
+
   self.camera:attach()
 
   self.objects:draw()
@@ -114,7 +120,7 @@ function Chapter:draw()
   self.suit:draw()
 
   -- Drawing items
-  love.graphics.setColor(0, 0, 0, 0.7)
+  love.graphics.setColor(31/255, 16/255, 42/255)
   love.graphics.rectangle('fill', 0, HEIGHT - 96, WIDTH, HEIGHT)
   for i = 1, #self.items do
     local x = WIDTH/2 - itemSize/2 - (#self.items-1) * (itemSize + spacing) / 2 + (i-1) * (itemSize + spacing)

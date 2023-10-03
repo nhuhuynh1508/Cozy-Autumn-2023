@@ -8,11 +8,6 @@ local Item = require 'src.item'
 local Chapter1 = Class('Chapter1', Chapter)
 
 function Chapter1:enter(from)
-  local backgrounds = {
-    Sprites.chapter1.backgrounds.A,
-    Sprites.chapter1.backgrounds.B,
-  }
-
   local objects = {
     Object(0, 0, Sprites.haley, 5),
     Object(100, 0, Sprites.emily, 1),
@@ -55,7 +50,7 @@ function Chapter1:enter(from)
 
   local items = {}
 
-  Chapter.enter(self, backgrounds, objects, items)
+  Chapter.enter(self, objects, items)
 end
 
 return Chapter1
