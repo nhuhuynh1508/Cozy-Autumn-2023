@@ -14,31 +14,37 @@ function Chapter1:enter(from)
   }
 
   local objects = {
-    Object(0, 0, Sprites.haley, 5),
-    Object(100, 0, Sprites.emily, 1),
-    Object(200, 0, Sprites.elliott, -1),
+    Object(0, 492, Sprites.chapter1.ui.inv, 1),
 
-    Clickable(500, 0, Sprites.sebastian, 0,
-        {Collider(0, 0, 256, 256), Collider(0, 256, 128, 128)},
+    Clickable(135, 285, Sprites.MoonFairy, 0, 50, 50,
+        {Collider(0, 0, 30, 42)},
         function()
-          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong..')
-          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong....')
-          Gamestate.current():addDialogue('Sebastian', 'Quang tao cai bong......')
-          Gamestate.current():addDialogue('Sebastian', 'Ta cung choi vong tron')
+          Gamestate.current():addDialogue('Moon Fairy', 'I have been waiting for you, the chosen one.')
+          Gamestate.current():addDialogue('Moon Fairy', 'I am Moon Fairy, the guardian of the moon.')
+          Gamestate.current():addDialogue('Moon Fairy', 'The Mid-Autumn Festival is in danger, as the Moon Stone has been stolen by the evil forces, and without it, the moon can not shine to its fullest.')
+          Gamestate.current():addDialogue('Moon Fairy', 'I will be your guardian on this journey, but first you have to do for me a favor. Fix my wings, and I will guide you to the Moon Stone.')
         end
     ),
 
-    Inspectable(0, 300, Sprites.leah, 0,
-        {Collider(0, 0, 256, 256)},
-        {Object(200, 150, Sprites.alex, -4)},
-        {Clickable(350, 150, Sprites.shane, -1,
-            {Collider(0, 0, 256, 256)},
-            function() Gamestate.current():addItem(Item('C2H5OH', Sprites.harvey)) end
-        )}
+    Clickable(200, 400, Sprites.Mei, 0, 100, 100,
+        {Collider(0, 0, 50, 50)},
+        function()
+          Gamestate.current():addDialogue('Mei', 'Without the full moon, the Mid-Autumn Festival will be ruined. I must do something.')
+          Gamestate.current():addDialogue('Mei', 'I must save the Moon Fairy, and then take the Moon Stone back.')
+        end
     ),
 
-    Clickable(500, 300, Sprites.abigail, 0,
-        {Collider(0, 0, 256, 256)},
+    -- Inspectable(0, 300, Sprites.leah, 0,
+    --     {Collider(0, 0, 256, 256)},
+    --     {Object(200, 150, Sprites.alex, -4)},
+    --     {Clickable(350, 150, Sprites.shane, -1,
+    --         {Collider(0, 0, 256, 256)},
+    --         function() Gamestate.current():addItem(Item('C2H5OH', Sprites.harvey)) end
+    --     )}
+    -- ),
+
+    Clickable(670, 180, Sprites.door, 0, 100, 100,
+        {Collider(0, 0, 100, 170)},
         function()
           Gamestate.current():switchScene(1)
         end

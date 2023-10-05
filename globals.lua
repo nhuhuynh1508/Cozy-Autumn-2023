@@ -14,3 +14,5 @@ function math.clamp(v, min, max)
     return v
   end
 end
+
+DEBUG = true

@@ -18,6 +18,10 @@ Sprites = {
     backgrounds = {
       A = love.graphics.newImage('assets/Chapter 1/A.png'),
       B = love.graphics.newImage('assets/Chapter 1/B.png'),
+    },
+
+    ui = {
+      inv = love.graphics.newImage('assets/ui/inventory.png'),
     }
   }
 }

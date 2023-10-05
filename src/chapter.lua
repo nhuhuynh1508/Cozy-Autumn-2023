@@ -108,11 +108,15 @@ function Chapter:draw()
 
   if self.currentDialogue then
     love.graphics.setColor(0.4, 0.4, 0.4, 0.8)
-    love.graphics.rectangle('fill', 40, 400, love.graphics.getWidth() - 80, 160)
+    love.graphics.rectangle('fill', 30, 400, love.graphics.getWidth() - 70, 85)
 
+    font1 = love.graphics.newFont('assets/font/DejaVuSerif.ttf', 14)
+    font2 = love.graphics.newFont('assets/font/DejaVuSerif-Bold.ttf', 14)
+
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.print(self.currentDialogue.name, font2, 60, 415)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.print(self.currentDialogue.name, 60, 420)
-    love.graphics.print(self.currentDialogue.line, 60, 440)
+    love.graphics.printf(self.currentDialogue.line, font1, 60, 435, love.graphics.getWidth() - 100, 'left')
   end
 
   self.camera:detach()
@@ -120,8 +124,8 @@ function Chapter:draw()
   self.suit:draw()
 
   -- Drawing items
-  love.graphics.setColor(31/255, 16/255, 42/255)
-  love.graphics.rectangle('fill', 0, HEIGHT - 96, WIDTH, HEIGHT)
+  -- love.graphics.setColor(31/255, 16/255, 42/255)
+  -- love.graphics.rectangle('fill', 0, HEIGHT - 96, WIDTH, HEIGHT)
   for i = 1, #self.items do
     local x = WIDTH/2 - itemSize/2 - (#self.items-1) * (itemSize + spacing) / 2 + (i-1) * (itemSize + spacing)
 

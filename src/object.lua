@@ -1,10 +1,12 @@
 local Object = Class('Object')
 
-function Object:initialize(x, y, sprite, layer)
-  self.x, self.y = x or 0, y or 0
+function Object:initialize(x, y, sprite, layer, w, h)
+  self.x, self.y = x or 0, y or 100
 
   self.sprite = sprite
   self.layer = layer or 0
+
+  self.w, self.h = w or 50, h or 50
 
   self.manager = nil
 end
@@ -24,8 +26,10 @@ function Object:update(dt)
 end
 
 function Object:draw()
-  love.graphics.setColor(1, 1, 1)
-  love.graphics.draw(self.sprite, self.x, self.y, 0, 2, 2)
+  if self.sprite ~= nil then
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(self.sprite, self.x, self.y, 0, 2, 2)
+  end
 end
 
 function Object:mousepressed(mx, my, button)
