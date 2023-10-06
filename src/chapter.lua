@@ -8,8 +8,9 @@ local spacing = 16
 
 function Chapter:enter(backgrounds, objects, items)
   self.backgrounds = backgrounds or {}
-  self._currentScene = 1
+  self._currentScene = 0
   self.camera = Camera.new()
+  self:switchScene(self._currentScene)
 
   self.objects = Manager(objects)
   self.inspectedObject = nil
@@ -49,10 +50,7 @@ end
 
 function Chapter:getSceneX(scene)
   local sign = 0
-  if scene > 0 then sign = 1
-  elseif scene < 0 then sign = -1
-  end
-  return scene * (WIDTH + 200) + (WIDTH/2 * sign)
+  return scene * (WIDTH + 200)
 end
 
 function Chapter:switchScene(scene)
@@ -96,7 +94,6 @@ function Chapter:draw()
   self.objects:draw()
 
   love.graphics.setColor(1, 1, 1)
-  love.graphics.print(tostring(self.inspectedObject))
 
   if self.inspectedObject then
     love.graphics.setColor(0, 0, 0, 0.4)
@@ -122,6 +119,10 @@ function Chapter:draw()
   self.camera:detach()
 
   self.suit:draw()
+
+  love.graphics.print(tostring(self._currentScene))
+  local x, y = self.camera:position()
+  love.graphics.print(string.format('x = %d  y = %d', x, y), 0, 15)
 
   -- Drawing items
   -- love.graphics.setColor(31/255, 16/255, 42/255)

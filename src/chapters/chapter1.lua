@@ -9,8 +9,8 @@ local Chapter1 = Class('Chapter1', Chapter)
 
 function Chapter1:enter(from)
   local backgrounds = {
-    Sprites.chapter1.backgrounds.A,
-    Sprites.chapter1.backgrounds.B,
+    [0] = Sprites.chapter1.backgrounds.A,
+    [1] = Sprites.chapter1.backgrounds.B,
   }
 
   local objects = {
@@ -50,11 +50,10 @@ function Chapter1:enter(from)
         end
     ),
 
-    Clickable(self:getSceneX(1) + 350, 200, Sprites.maru, 0,
-        {Collider(0, 0, 256, 256)},
+    Clickable(self:getSceneX(1) + 132, 120, nil, 0, 0, 0,
+        {Collider(0, 0, 100, 170)},
         function()
-          print('hello baby girl')
-          Gamestate.current():switchScene(0)
+          Gamestate.current():switchScene(2)
         end
     ),
   }
@@ -62,6 +61,8 @@ function Chapter1:enter(from)
   local items = {}
 
   Chapter.enter(self, backgrounds, objects, items)
+
+  print(self.camera.x)
 end
 
 return Chapter1

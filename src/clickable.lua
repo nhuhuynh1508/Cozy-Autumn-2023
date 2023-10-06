@@ -26,7 +26,7 @@ function Clickable:draw()
   end
 
   if DEBUG then
-    love.graphics.setColor(1, 1, 1, 0)
+    love.graphics.setColor(1, 1, 1)
     for _, collider in ipairs(self.colliders) do
       love.graphics.rectangle('line', self.x + collider.x, self.y + collider.y, collider.w, collider.h)
     end
